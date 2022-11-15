@@ -5,6 +5,7 @@ import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.css";
+import PropTypes from "prop-types";
 
 
 export const Home = () => {
@@ -145,4 +146,9 @@ const Tasks = (props) => {
       ))}
     </ul>
   )
+}
+Tasks.PropTypes = {
+  tasks: PropTypes.string,
+  selectListId: PropTypes.string,
+  isDoneDisplay: PropTypes.string,
 }
