@@ -172,8 +172,8 @@ const Tasks = (props) => {
     </ul>
   );
 };
-Tasks.PropTypes = {
-  tasks: PropTypes.string,
+Tasks.propTypes = {
+  tasks: PropTypes.array,
   selectListId: PropTypes.string,
   isDoneDisplay: PropTypes.string,
 };
