@@ -5,6 +5,10 @@ import { useCookies } from "react-cookie";
 import { url } from "../const";
 import { useNavigate, useParams } from "react-router-dom";
 import "./editTask.scss";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { ja } from "date-fns/locale";
+import { TextField } from "@mui/material";
 
 export const EditTask = () => {
   const navitate = useNavigate();
@@ -12,16 +16,19 @@ export const EditTask = () => {
   const [cookies] = useCookies();
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [limit, setLimit] = useState("");
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (limit) => setLimit(limit);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
   const onUpdateTask = () => {
     console.log(isDone);
     const data = {
       title: title,
       detail: detail,
+      limit: limit,
       done: isDone,
     };
 
@@ -66,6 +73,7 @@ export const EditTask = () => {
         const task = res.data;
         setTitle(task.title);
         setDetail(task.detail);
+        setLimit(task.limit);
         setIsDone(task.done);
       })
       .catch((err) => {
@@ -97,6 +105,18 @@ export const EditTask = () => {
             className="edit-task-detail"
             value={detail}
           />
+          <br />
+          <label>期限日時</label>
+          <br />
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+            <DateTimePicker
+              value={limit}
+              onChange={handleLimitChange}
+              inputFormat="yyyy年MM月dd日 HH:mm"
+              mask="____年__月__日 __:__"
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           <br />
           <div>
             <input

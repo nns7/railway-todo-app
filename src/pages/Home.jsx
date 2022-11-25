@@ -6,6 +6,7 @@ import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.scss";
 import PropTypes from "prop-types";
+import { timeRemainingFromNow, showJST } from "../DateUtil";
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -164,6 +165,12 @@ const Tasks = (props) => {
               className="task-item-link"
             >
               {task.title}
+              <br />
+              期限日時：
+              {showJST(task.limit)}
+              <br />
+              残り日時：
+              {timeRemainingFromNow(task.limit)}
               <br />
               {task.done ? "完了" : "未完了"}
             </Link>

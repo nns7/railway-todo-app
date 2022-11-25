@@ -5,22 +5,29 @@ import { url } from "../const";
 import { Header } from "../components/Header";
 import "./newTask.scss";
 import { useNavigate } from "react-router-dom";
+import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import TextField from "@mui/material/TextField";
+import { ja } from "date-fns/locale";
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [limit, setLimit] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
+  const handleLimitChange = (limit) => setLimit(limit);
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
+      limit: limit,
       done: false,
     };
 
@@ -89,6 +96,18 @@ export const NewTask = () => {
             onChange={handleDetailChange}
             className="new-task-detail"
           />
+          <br />
+          <label>期限日時</label>
+          <br />
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+            <DateTimePicker
+              value={limit}
+              onChange={handleLimitChange}
+              inputFormat="yyyy年MM月dd日 HH:mm"
+              mask="____年__月__日 __:__"
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           <br />
           <button
             type="button"
