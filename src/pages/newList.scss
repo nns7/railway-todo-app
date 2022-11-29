@@ -1,8 +1,17 @@
 @charset "utf-8";
+@import "../mixin";
 
 .new-list {
   width: 1000px;
   margin: 0 auto;
+
+  @include mq(sp) {
+    width: 100%;
+  }
+
+  @include mq(tab) {
+    width: 100%;
+  }
 }
 
 .new-list-form {
